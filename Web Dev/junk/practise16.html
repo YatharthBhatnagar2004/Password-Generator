@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alingment</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 900px;
+            border: 3px red dashed;
+            margin:33px auto
+        }
+
+        .item {
+            border: 3px gray;
+            border-style: groove;
+            margin: 12px 3px;
+            padding: 12px 4px;
+            background: #ff9292;
+        }
+
+        #fruit {
+            float: left;
+            width: 48%;
+        }
+
+        #books {
+            float: right;
+            width: 10%;
+        }
+
+        #staitonary {
+            /* float: left; */
+            clear: both;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="fruit" class="item">
+            <h3>fruits</h3>
+            <p id="fruitspara" class="para">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi saepe tenetur maiores repudiandae vel
+                necessitatibus dignissimos sint obcaecati nam quas, vitae et ipsa unde cum libero adipisci quis possimus
+                velit amet? Eveniet, cupiditate ipsa.
+            </p>
+        </div>
+        <div id="books" class="item">
+            <h3>books</h3>
+            <p id="booksspara" class="para">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia necessitatibus quam, totam voluptates
+                accusamus debitis voluptatem id iste deserunt! Alias voluptas cumque distinctio eos magnam fugit,
+                corrupti iure repellat eveniet magni dolores eius suscipit!
+            </p>
+        </div>
+        <div id="staitonary" class="item">
+            <h3>staitonary</h3>
+            <p id="staitonary" class="para">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, pariatur similique itaque veritatis,
+                perferendis ducimus odio earum laudantium rem magni neque voluptas esse distinctio officia eum? Ipsum
+                eius nisi impedit, odit quasi ut perspiciatis.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

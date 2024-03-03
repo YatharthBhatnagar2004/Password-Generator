@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "../DSA"
+		},
+		{
+			"path": "../C++"
+		},
+		{
+			"path": "../Web Dev"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iostream": "cpp",
+			"*.tcc": "cpp",
+			"deque": "cpp",
+			"ostream": "cpp",
+			"cmath": "cpp",
+			"random": "cpp",
+			"complex": "cpp",
+			"cstdlib": "cpp",
+			"chrono": "cpp",
+			"limits": "cpp",
+			"valarray": "cpp"
+		},
+		"liveServer.settings.multiRootWorkspaceName": "Web Dev",
+		"cph.general.onceMaintainerMessage": false
+	}
+}
