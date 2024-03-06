@@ -1,5 +1,5 @@
-import {cart} from '../data/cart.js';
-import {products} from '../data/products.js';
+import { cart, addedtoCart, addtoCart, carttotalQuantity } from '../data/cart.js';
+import { products } from '../data/products.js';
 let productHtml = ``;
 products.forEach((product) => {
     productHtml += `
@@ -52,42 +52,13 @@ products.forEach((product) => {
         ;
 })
 document.querySelector('.products-grid').innerHTML = productHtml;
-const addedMessageTimeouts = {};
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
         let flag = false;
         const productId = button.dataset.productId;
-        const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`).value;
-        cart.forEach((item) => {
-            if (productId === item.Id) {
-                let quantity = Number(item.quantity);
-                quantity += Number(quantitySelector);
-                item.quantity = quantity;
-                flag = true;
-            }
-        })
-        if (!flag) {
-            cart.push({
-                Id: button.dataset.productId,
-                quantity: Number(quantitySelector)
-            });
-        }
-        let cartQuantity = 0;
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-        })
+        addtoCart(productId, flag);
+        const cartQuantity = carttotalQuantity();
         console.log(cart);
-        document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-        document.querySelector(`.js-added-to-cart-${productId}`).classList.add('added-to-cart-visible');
-        setTimeout(() => {
-            const previousTimeoutId = addedMessageTimeouts[productId];
-            if (previousTimeoutId) {
-                clearTimeout(previousTimeoutId);
-            }
-            const timeoutId = setTimeout(() => {
-                document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('added-to-cart-visible');
-            },2000)
-            addedMessageTimeouts[productId] = timeoutId;
-        });
+        addedtoCart(cartQuantity, productId);
     });
 });
