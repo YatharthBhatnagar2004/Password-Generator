@@ -17,7 +17,7 @@ export function addtoCart(productId, flag) {
         });
     }
 }
-export function carttotalQuantity() {
+export function updateCartQuantity() {
     let cartQuantity = 0;
     cart.forEach((item) => {
         cartQuantity += item.quantity;
