@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateCartQuantity } from '../data/cart.js'
+import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity } from '../data/cart.js'
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 let cartHtml = ``;
@@ -32,11 +32,16 @@ cart.forEach((item) => {
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">${productQuantity}</span>
+                    Quantity: <span class="quantity-label js-quantity-label-${item.Id}">${productQuantity}</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-cart-update" data-product-id="${item.Id}">
                     Update
                   </span>
+                  <input class="update-quantity-input js-update-input-${item.Id}" data-product-id="${item.Id}" type="text">
+                  <span class="save-quantity-link link-primary js-cart-update-save " data-product-id="${item.Id}">
+                    Save
+                  </span>
+
                   <span class="delete-quantity-link link-primary js-cart-delete"
                    data-product-id="${item.Id}">
                     Delete
@@ -92,7 +97,6 @@ cart.forEach((item) => {
         </div>
     `
 });
-// console.log(cartHtml);
 document.querySelector('.js-order-summary').innerHTML = cartHtml;
 document.querySelectorAll('.js-cart-delete').forEach((button) => {
   const productId = button.dataset.productId;
@@ -100,10 +104,49 @@ document.querySelectorAll('.js-cart-delete').forEach((button) => {
     removeFromCart(productId);
     const conatiner = document.querySelector(`.js-cart-item-container-${productId}`);
     conatiner.remove();
-    cartQuantity = updateCartQuantity();
+    cartQuantity = calculateCartQuantity();
     document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`
+  });
+});
+let cartQuantity = calculateCartQuantity();
+document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`
+cartQuantity = calculateCartQuantity();
+document.querySelectorAll('.js-cart-update').forEach((button) => {
+  const productId = button.dataset.productId;
+  button.addEventListener('click', () => {
+    const container = document.querySelector(`.js-cart-item-container-${productId}`);
+    container.classList.add("is-editing-quantity");
+    container.classList.add("is-editing-quantity-update");
+    container.classList.remove('is-editing-quantity-input');
+  });
+});
+document.querySelectorAll('.js-cart-update-save').forEach((button) => {
+  const productId = button.dataset.productId;
+  button.addEventListener('click', () => {
+    inputSaveUpdate(productId);
+  });
+});
+document.querySelectorAll(".update-quantity-input").forEach((button)=>{
+  const productId = button.dataset.productId;
+  button.addEventListener('keypress',(event)=>{
+    if(event.key==='Enter'){
+      inputSaveUpdate(productId);
+    }
   })
 })
-let cartQuantity = updateCartQuantity();
-document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`
-cartQuantity = updateCartQuantity();
+function inputSaveUpdate(productId){
+  const container = document.querySelector(`.js-cart-item-container-${productId}`);
+      container.classList.remove('is-editing-quantity-update');
+      container.classList.add('is-editing-quantity-input')
+      const input = document.querySelector(`.js-update-input-${productId}`);
+      const quantity = Number(input.value);
+      if (quantity < 0 || quantity > 1000) {
+        alert("Enter valid quantity");
+      } else {
+        updateCartQuantity(productId, quantity);
+        document.querySelector(`.js-quantity-label-${productId}`).innerHTML = quantity;
+        cartQuantity = calculateCartQuantity();
+        document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`;
+      }
+      input.value = '';
+}
