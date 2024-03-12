@@ -3,11 +3,11 @@ if (!cart) {
     cart = [{
         Id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
         quantity: 1,
-        deliveryId:1
+        deliveryId: 1
     }, {
         Id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
         quantity: 1,
-        deliveryId:1
+        deliveryId: 1
     }];
 }
 export function saveToLocalStorage() {
@@ -28,7 +28,7 @@ export function addtoCart(productId, flag) {
         cart.push({
             Id: productId,
             quantity: Number(quantitySelector),
-            deliveryId:1
+            deliveryId: 1
         });
     }
     saveToLocalStorage();
@@ -64,11 +64,22 @@ export function removeFromCart(productId) {
     cart = newCart;
     saveToLocalStorage();
 }
-export function updateCartQuantity(productId,quantity) {
+export function updateCartQuantity(productId, quantity) {
     cart.forEach((item) => {
         if (item.Id === productId) {
             item.quantity = quantity;
         }
     });
+    saveToLocalStorage();
+}
+export function updateCartDeliveryOptions(productId, deliveryOptionId) {
+    let matchingItem;
+    cart.forEach((item) => {
+        if (item.Id === productId) {
+            matchingItem = item;
+        }
+    });
+    matchingItem.deliveryId = deliveryOptionId;
+    console.log(matchingItem);
     saveToLocalStorage();
 }

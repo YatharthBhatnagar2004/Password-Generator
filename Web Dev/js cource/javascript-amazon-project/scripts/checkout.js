@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity } from '../data/cart.js'
+import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateCartDeliveryOptions } from '../data/cart.js'
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
@@ -8,11 +8,11 @@ cart.forEach((item) => {
   let productQuantity = item.quantity;
   let productName;
   let productPrice = 0;
-  let date=0;
   let deliveryOptionId = item.deliveryId;
-  deliveryOptions.forEach((item)=>{
-    if(item.id===deliveryOptionId){
-      date=item.deliverydate;
+  let date = 0;
+  deliveryOptions.forEach((item) => {
+    if (Number(item.id )=== Number(deliveryOptionId)) {
+      date = item.deliverydate;
     }
   })
   products.forEach((product) => {
@@ -25,7 +25,7 @@ cart.forEach((item) => {
   cartHtml += `
         <div class="cart-item-container js-cart-item-container-${item.Id}">
             <div class="delivery-date js-delivery-date-${item.Id}"> 
-              ${`Delivery date: ${dayjs().add(date,'days').format('dddd, MMMM D')}`}
+              ${`Delivery date: ${dayjs().add(date, 'days').format('dddd, MMMM D')}`}
             </div>
             <div class="cart-item-details-grid">
               <img class="product-image"
@@ -74,7 +74,10 @@ function deliveryOption(productId, Product) {
     const isChecked = item.id === Product.deliveryId;
     html +=
       `
-      <div class="delivery-option">
+      <div class="delivery-option js-deliver-option"
+        data-product-id="${productId}"
+        data-deliveryOption-id="${item.id}"
+      >
         <input type="radio" 
           ${isChecked === true ? "checked" : ''}
           class="delivery-option-input"
@@ -147,3 +150,9 @@ function inputSaveUpdate(productId) {
   }
   input.value = '';
 }
+document.querySelectorAll('.js-deliver-option').forEach((button) => {
+  button.addEventListener('click', () => {
+    const { productId, deliveryoptionId } = button.dataset;
+    updateCartDeliveryOptions(productId, deliveryoptionId);
+  })
+})
