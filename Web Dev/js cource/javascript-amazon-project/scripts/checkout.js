@@ -106,11 +106,11 @@ function renderOrderSummary() {
       const conatiner = document.querySelector(`.js-cart-item-container-${productId}`);
       conatiner.remove();
       cartQuantity = calculateCartQuantity();
-      document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`
+      document.querySelector('.js-return-to-home-link').innerHTML =`${cartQuantity} items`
     });
   });
   let cartQuantity = calculateCartQuantity();
-  document.querySelector('.js-checkout-header').innerHTML = `Checkout(${cartQuantity})`
+  document.querySelector('.js-return-to-home-link').innerHTML = `${cartQuantity} items`
   cartQuantity = calculateCartQuantity();
   document.querySelectorAll('.js-cart-update').forEach((button) => {
     const productId = button.dataset.productId;
