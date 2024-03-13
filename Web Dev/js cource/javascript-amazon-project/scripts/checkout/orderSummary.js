@@ -1,8 +1,9 @@
 import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateCartDeliveryOptions } from '../../data/cart.js'
-import {  getProduct } from '../../data/products.js';
+import { getProduct } from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 export function renderOrderSummary() {
   let cartHtml = ``;
   cart.forEach((item) => {
@@ -12,7 +13,7 @@ export function renderOrderSummary() {
     let productPrice = 0;
     let deliveryOptionId = item.deliveryId;
     let date = 0;
-    let deliveryOptions=getDeliveryOption(deliveryOptionId);
+    let deliveryOptions = getDeliveryOption(deliveryOptionId);
     date = deliveryOptions.deliverydate;
     let matchingProduct = getProduct(item.Id);
     productImage = matchingProduct.image;
@@ -99,12 +100,11 @@ export function renderOrderSummary() {
     const productId = button.dataset.productId;
     button.addEventListener('click', () => {
       removeFromCart(productId);
-      const conatiner = document.querySelector(`.js-cart-item-container-${productId}`);
-      conatiner.remove();
+      renderOrderSummary();
+      renderPaymentSummary();
+      renderCheckoutHeader();
     });
   });
-  let cartQuantity = calculateCartQuantity();
-  document.querySelector('.js-return-to-home-link').innerHTML = `${cartQuantity} items`
   document.querySelectorAll('.js-cart-update').forEach((button) => {
     const productId = button.dataset.productId;
     button.addEventListener('click', () => {
@@ -118,7 +118,8 @@ export function renderOrderSummary() {
     const productId = button.dataset.productId;
     button.addEventListener('click', () => {
       inputSaveUpdate(productId);
-      document.querySelector('.js-return-to-home-link').innerHTML = `${cartQuantity} items`
+      renderPaymentSummary();
+      renderCheckoutHeader();
     });
   });
   document.querySelectorAll(".update-quantity-input").forEach((button) => {
@@ -126,10 +127,12 @@ export function renderOrderSummary() {
     button.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
         inputSaveUpdate(productId);
-        document.querySelector('.js-return-to-home-link').innerHTML = `${cartQuantity} items`
+        renderCheckoutHeader();
+        renderPaymentSummary();
       }
     })
   })
+  let cartQuantity;
   function inputSaveUpdate(productId) {
     const container = document.querySelector(`.js-cart-item-container-${productId}`);
     container.classList.remove('is-editing-quantity-update');
@@ -150,7 +153,6 @@ export function renderOrderSummary() {
       const { productId, deliveryoptionId } = button.dataset;
       updateCartDeliveryOptions(productId, deliveryoptionId);
       renderOrderSummary();
-      re
     })
   })
 }
