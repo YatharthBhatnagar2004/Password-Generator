@@ -153,6 +153,7 @@ export function renderOrderSummary() {
       const { productId, deliveryoptionId } = button.dataset;
       updateCartDeliveryOptions(productId, deliveryoptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     })
   })
 }

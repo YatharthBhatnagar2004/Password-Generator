@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Promise
+    <script>
+        const promiseOne = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log("promise started")
+                resolve({ username: "me", id: 2 });
+            }, 1000)
+            reject("error")
+        })
+        // promiseOne.then((user) => {
+        //     console.log(user);
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
+        async function consumePromiseOne() {
+            try {
+                const respone = await promiseOne;
+                console.log(respone)
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        consumePromiseOne()
+    </script>
+</body>
+
+</html>
