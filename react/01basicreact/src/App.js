@@ -1,8 +1,10 @@
 import './App.css';
-
+import Chai from './Chai.js';
 function App() {
   return (
-    <h1>React</h1>
+    <>
+    <Chai></Chai>
+    </>
   );
 }
 
