@@ -1,0 +1,3 @@
+POST/URL generates a new short url and return it example.com/random-id
+GET/:id get the original id
+GET/URL/analytics/:id Return the clicks for provided short id

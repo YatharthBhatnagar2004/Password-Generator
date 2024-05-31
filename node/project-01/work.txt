@@ -1,0 +1,12 @@
+GET/users get all  (HTML)
+GET/api/users get all  (JSON) do this for all
+GET/users/1 get info of user 1
+POST/users- create new user
+PATCH/users/1 -edit user with  id 1
+DELETE/users/1 -Delete user with  id 1
+
+
+MONGODB working
+- first  we define a schema
+- then we make a model using schema
+- then using model we do crud operations
